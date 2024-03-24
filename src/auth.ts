@@ -1,6 +1,7 @@
 import { Lucia } from "lucia";
-import { AstroDBAdapter } from "lucia-adapter-astrodb";
+
 import { db, Session, User } from "astro:db";
+import { AstroDBAdapter } from "./astro-adapter";
 
 const adapter = new AstroDBAdapter(db, Session, User);
 

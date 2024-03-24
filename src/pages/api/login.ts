@@ -26,7 +26,7 @@ export async function POST(context: APIContext): Promise<Response> {
 	}
 
   const existingUser = await db.select().from(User).where(eq(User.username, username.toLowerCase()));
-	if (!existingUser) {
+	if (!existingUser || !existingUser.length) {
 		// NOTE:
 		// Returning immediately allows malicious actors to figure out valid usernames from response times,
 		// allowing them to only focus on guessing passwords in brute-force attacks.

@@ -1,12 +1,26 @@
+---
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Mail } from 'lucide-react'
+import '@/styles/globals.css'
+---
+
 <html lang="en">
-  <body>
-    <h1>Sign in</h1>
-    <form method="post" action="/api/login">
-      <label for="username">Username</label>
-      <input id="username" name="username" />
-      <label for="password">Password</label>
-      <input id="password" name="password" />
-      <button>Continue</button>
+  <body class="h-screen w-screen flex flex-col justify-center items-center">
+    <h1 class="font-bold text-4xl mb-5">Sign in</h1>
+    <form method="post" action="/api/login" class="flex flex-col gap-5">
+      <div>
+        <Label for="username" className="text-md">Username</Label>
+        <Input id="username" name="username" placeholder="Username" />
+      </div>
+      <div>
+        <Label for="password" className="text-md">Password</Label>
+        <Input id="password" name="password" placeholder="Password" />
+      </div>
+      <Button variant="outline" className="bg-slate-200">
+        <Mail className="mr-2 h-4 w-4" /> Login with Email
+      </Button>
     </form>
   </body>
 </html>
