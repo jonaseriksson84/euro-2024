@@ -1,0 +1,9 @@
+---
+if (!Astro.locals.user) {
+  return Astro.redirect('/login')
+}
+---
+
+<form method="post" action="/api/logout">
+  <button>Sign out</button>
+</form>
