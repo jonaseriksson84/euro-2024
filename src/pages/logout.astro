@@ -1,9 +1,14 @@
 ---
+import { Button } from '@/components/ui/button'
+import Layout from '@/layouts/Layout.astro'
+
 if (!Astro.locals.user) {
   return Astro.redirect('/login')
 }
 ---
 
-<form method="post" action="/api/logout">
-  <button>Sign out</button>
-</form>
+<Layout>
+  <form method="post" action="/api/logout">
+    <Button>Sign out</Button>
+  </form>
+</Layout>

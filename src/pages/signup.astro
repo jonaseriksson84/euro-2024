@@ -1,12 +1,64 @@
-<html lang="en">
-  <body>
-    <h1>Sign up</h1>
-    <form method="post" action="/api/signup">
-      <label for="username">Username</label>
-      <input id="username" name="username" />
-      <label for="password">Password</label>
-      <input id="password" name="password" />
-      <button>Continue</button>
-    </form>
-  </body>
-</html>
+---
+import Password from '@/components/Password.astro'
+import Username from '@/components/Username.astro'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card'
+import Layout from '@/layouts/Layout.astro'
+---
+
+<Layout>
+  <form
+    id="signupForm"
+    method="post"
+    action="/api/signup"
+    class="flex flex-col gap-5"
+  >
+    <Card>
+      <CardHeader>
+        <CardTitle>Sign Up</CardTitle>
+        <CardDescription>Create a new account</CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-5">
+        <Username />
+        <Password />
+        <div id="errorMessage" class="text-destructive"></div>
+      </CardContent>
+      <CardFooter className="flex flex-col gap-2">
+        <Button className="w-full">Register</Button>
+        <div class="text-xs">
+          Have an account? <a class="font-bold hover:underline" href="/login"
+            >Log in</a
+          >
+        </div>
+      </CardFooter>
+    </Card>
+  </form>
+</Layout>
+
+<script type="module">
+  const form = document.getElementById('signupForm')
+  const errorMessageDiv = document.getElementById('errorMessage')
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    const formData = new FormData(form)
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+    })
+
+    if (!response.ok) {
+      const result = await response.json()
+      errorMessageDiv.textContent = result.error // Display error message
+    } else {
+      window.location.href = '/' // Redirect on success
+    }
+  })
+</script>
