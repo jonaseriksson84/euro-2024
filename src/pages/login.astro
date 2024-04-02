@@ -14,32 +14,34 @@ import {
 ---
 
 <Layout>
-  <form
-    id="loginForm"
-    method="post"
-    action="/api/login"
-    class="flex flex-col gap-5"
-  >
-    <Card>
-      <CardHeader>
-        <CardTitle>Log in</CardTitle>
-        <CardDescription>Access your account</CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-5">
-        <Username />
-        <Password />
-        <div id="errorMessage" class="text-destructive"></div>
-      </CardContent>
-      <CardFooter className="flex flex-col gap-2">
-        <Button className="w-full">Login</Button>
-        <div class="text-xs">
-          No account? <a class="font-bold hover:underline" href="/signup"
-            >Sign up</a
-          >
-        </div>
-      </CardFooter>
-    </Card>
-  </form>
+  <div class="flex items-center justify-center h-screen">
+    <form
+      id="loginForm"
+      method="post"
+      action="/api/login"
+      class="flex flex-col gap-5"
+    >
+      <Card>
+        <CardHeader>
+          <CardTitle>Log in</CardTitle>
+          <CardDescription>Access your account</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-5">
+          <Username />
+          <Password />
+          <div id="errorMessage" class="text-destructive"></div>
+        </CardContent>
+        <CardFooter className="flex flex-col gap-2">
+          <Button className="w-full">Login</Button>
+          <div class="text-xs">
+            No account? <a class="font-bold hover:underline" href="/signup"
+              >Sign up</a
+            >
+          </div>
+        </CardFooter>
+      </Card>
+    </form>
+  </div>
 </Layout>
 
 <script type="module">
@@ -49,6 +51,8 @@ import {
   form.addEventListener('submit', async (event) => {
     event.preventDefault()
     const formData = new FormData(form)
+    console.log('form', form)
+    console.log('formData', formData)
     const response = await fetch(form.action, {
       method: 'POST',
       body: formData,

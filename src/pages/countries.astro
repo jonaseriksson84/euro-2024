@@ -1,0 +1,22 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { db, Country } from 'astro:db'
+
+const countries = await db.select().from(Country)
+---
+
+<Layout>
+  <h2 class="mb-4 text-xl font-bold">Countries</h2>
+
+  {
+    countries.map(({ name, flag }) => (
+      <div class="flex gap-2">
+        <img
+          src={`https://hatscripts.github.io/circle-flags/flags/${flag}.svg`}
+          width="24"
+        />
+        {name}
+      </div>
+    ))
+  }
+</Layout>

@@ -1,0 +1,94 @@
+---
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+import Layout from '@/layouts/Layout.astro'
+import { db, Fixture, Country, eq, sql } from 'astro:db'
+const teamASubquery = db
+  .select({
+    id: Country.id,
+    name: Country.name,
+    flag: Country.flag,
+  })
+  .from(Country)
+  .as('teamA')
+const teamBSubquery = db
+  .select({
+    id: Country.id,
+    name: Country.name,
+    flag: Country.flag,
+  })
+  .from(Country)
+  .as('teamB')
+const fixtures = await db
+  .select({
+    time: Fixture.time,
+    matchDay: Fixture.matchDay,
+    teamAName: teamASubquery.name,
+    teamAFlag: teamASubquery.flag,
+    teamBName: teamBSubquery.name,
+    teamBFlag: teamBSubquery.flag,
+  })
+  .from(Fixture)
+  .leftJoin(teamASubquery, eq(Fixture.teamA, teamASubquery.id))
+  .leftJoin(teamBSubquery, eq(Fixture.teamB, teamBSubquery.id))
+  .orderBy(Fixture.matchDayNumeric)
+
+const transformedResults = fixtures.map((fixture) => ({
+  time: fixture.time,
+  teamA: {
+    name: fixture.teamAName,
+    flag: fixture.teamAFlag,
+  },
+  teamB: {
+    name: fixture.teamBName,
+    flag: fixture.teamBFlag,
+  },
+}))
+---
+
+<Layout>
+  <h3 class="mb-6 text-lg font-bold text-center">Matchday 1</h3>
+  <div class="grid grid-cols-3 gap-4 gap-y-6">
+    {
+      transformedResults.map(({ time, teamA, teamB }) => (
+        <Card>
+          <CardHeader className="text-center p-2">
+            <span class="text-sm text-muted-foreground">
+              {new Date(time).toLocaleString('sv-SE', {
+                dateStyle: 'short',
+                timeStyle: 'short',
+              })}
+            </span>
+          </CardHeader>
+          <CardContent className="flex min-w-40 justify-between align-center pb-4">
+            <div class="flex justify-start w-1/2 gap-2">
+              <img
+                src={`https://hatscripts.github.io/circle-flags/flags/${teamA.flag}.svg`}
+                width="24"
+              />
+              {teamA.name}
+            </div>
+            <span class="text-sm text-muted-foreground">vs.</span>
+            <div class="flex justify-end w-1/2 gap-2">
+              {teamB.name}
+              <img
+                src={`https://hatscripts.github.io/circle-flags/flags/${teamB.flag}.svg`}
+                width="24"
+              />
+            </div>
+          </CardContent>
+          <CardFooter className="border-t flex justify-evenly divide p-0">
+            <div class="hover:bg-[hsl(var(--muted-foreground))] w-1/3 p-2 cursor-pointer text-center">
+              1
+            </div>
+            <div class="hover:bg-[hsl(var(--muted-foreground))] w-1/3 p-2 cursor-pointer text-center">
+              X
+            </div>
+            <div class="hover:bg-[hsl(var(--muted-foreground))] w-1/3 p-2 cursor-pointer text-center">
+              2
+            </div>
+          </CardFooter>
+        </Card>
+      ))
+    }
+  </div>
+</Layout>

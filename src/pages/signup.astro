@@ -14,32 +14,34 @@ import Layout from '@/layouts/Layout.astro'
 ---
 
 <Layout>
-  <form
-    id="signupForm"
-    method="post"
-    action="/api/signup"
-    class="flex flex-col gap-5"
-  >
-    <Card>
-      <CardHeader>
-        <CardTitle>Sign Up</CardTitle>
-        <CardDescription>Create a new account</CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-5">
-        <Username />
-        <Password />
-        <div id="errorMessage" class="text-destructive"></div>
-      </CardContent>
-      <CardFooter className="flex flex-col gap-2">
-        <Button className="w-full">Register</Button>
-        <div class="text-xs">
-          Have an account? <a class="font-bold hover:underline" href="/login"
-            >Log in</a
-          >
-        </div>
-      </CardFooter>
-    </Card>
-  </form>
+  <div class="flex items-center justify-center h-screen">
+    <form
+      id="signupForm"
+      method="post"
+      action="/api/signup"
+      class="flex flex-col gap-5"
+    >
+      <Card>
+        <CardHeader>
+          <CardTitle>Sign Up</CardTitle>
+          <CardDescription>Create a new account</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-5">
+          <Username />
+          <Password />
+          <div id="errorMessage" class="text-destructive"></div>
+        </CardContent>
+        <CardFooter className="flex flex-col gap-2">
+          <Button className="w-full">Register</Button>
+          <div class="text-xs">
+            Have an account? <a class="font-bold hover:underline" href="/login"
+              >Log in</a
+            >
+          </div>
+        </CardFooter>
+      </Card>
+    </form>
+  </div>
 </Layout>
 
 <script type="module">

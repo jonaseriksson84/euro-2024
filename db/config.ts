@@ -1,33 +1,65 @@
 // db/config.ts
-import { column, defineDb, defineTable } from "astro:db";
+import { column, defineDb, defineTable } from 'astro:db'
 
 const User = defineTable({
-	columns: {
-		id: column.text({
-			primaryKey: true
-		}),
+  columns: {
+    id: column.text({
+      primaryKey: true,
+    }),
     username: column.text({
       unique: true,
     }),
     hashed_password: column.text(),
-	}
-});
+  },
+})
 
 const Session = defineTable({
-	columns: {
-		id: column.text({
-			primaryKey: true
-		}),
-		expiresAt: column.date(),
-		userId: column.text({
-			references: () => User.columns.id
-		})
-	}
-});
+  columns: {
+    id: column.text({
+      primaryKey: true,
+    }),
+    expiresAt: column.date(),
+    userId: column.text({
+      references: () => User.columns.id,
+    }),
+  },
+})
+
+const Country = defineTable({
+  columns: {
+    id: column.text({
+      primaryKey: true,
+      unique: true,
+    }),
+    name: column.text({
+      unique: true,
+    }),
+    flag: column.text(),
+  },
+})
+
+const Fixture = defineTable({
+  columns: {
+    id: column.text({
+      primaryKey: true,
+    }),
+    teamA: column.text({
+      references: () => Country.columns.id,
+    }),
+    teamB: column.text({
+      references: () => Country.columns.id,
+    }),
+    time: column.date(),
+    matchDay: column.text(),
+    matchDayNumeric: column.number(),
+  },
+})
 
 export default defineDb({
-	tables: {
-		User,
-		Session
-	}
-});
+  tables: {
+    User,
+    Session,
+    Country,
+    Fixture,
+  },
+})

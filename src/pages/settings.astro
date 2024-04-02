@@ -1,0 +1,64 @@
+---
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import Layout from '@/layouts/Layout.astro'
+if (!Astro.locals.user) {
+  return Astro.redirect('/login')
+}
+const user = Astro.locals.user
+---
+
+<Layout>
+  <div class="max-w-[1200px] flex mx-auto py-8">
+    <div class="w-2/12 font-bold border-r">
+      <h2 class="font-bold">Account Settings</h2>
+    </div>
+    <form
+      id="usernameForm"
+      method="post"
+      action="/api/update-username"
+      class="flex w-full"
+    >
+      <div class="grid w-full max-w-sm items-center gap-1.5 px-8">
+        <Label htmlFor="username">Username</Label>
+        <Input
+          type="username"
+          id="username"
+          name="username"
+          placeholder="Username"
+          defaultValue={user.username}
+        />
+      </div>
+      <Button className="self-end">Update</Button>
+      <div class="self-end ml-10 text-destructive" id="errorMessage"></div>
+      <div class="self-end ml-10 text-primary" id="statusMessage"></div>
+    </form>
+  </div>
+</Layout>
+
+<script type="module">
+  const form = document.getElementById('usernameForm')
+  const errorMessageDiv = document.getElementById('errorMessage')
+  errorMessageDiv.textContent = ''
+  const statusMessageDiv = document.getElementById('statusMessage')
+  statusMessageDiv.textContent = ''
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    errorMessageDiv.textContent = ''
+    statusMessageDiv.textContent = ''
+    const formData = new FormData(form)
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+    })
+
+    const result = await response.json()
+    if (!response.ok) {
+      errorMessageDiv.textContent = result.error // Display error message
+    } else {
+      statusMessageDiv.textContent = result.message
+    }
+  })
+</script>
