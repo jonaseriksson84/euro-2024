@@ -330,5 +330,99 @@ export default async function seed() {
       matchDay: 'MatchDay 3',
       matchDayNumeric: 3,
     },
+
+    {
+      id: nanoid(),
+      time: new Date('2024-06-29 18:00'),
+      matchDay: 'Round of 16',
+      matchDayNumeric: 4,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-06-29 21:00'),
+      matchDay: 'Round of 16',
+      matchDayNumeric: 4,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-06-30 18:00'),
+      matchDay: 'Round of 16',
+      matchDayNumeric: 4,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-06-30 21:00'),
+      matchDay: 'Round of 16',
+      matchDayNumeric: 4,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-07-01 18:00'),
+      matchDay: 'Round of 16',
+      matchDayNumeric: 4,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-06-01 21:00'),
+      matchDay: 'Round of 16',
+      matchDayNumeric: 4,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-07-02 18:00'),
+      matchDay: 'Round of 16',
+      matchDayNumeric: 4,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-07-02 21:00'),
+      matchDay: 'Round of 16',
+      matchDayNumeric: 4,
+    },
+
+    {
+      id: nanoid(),
+      time: new Date('2024-07-05 18:00'),
+      matchDay: 'Quarterfinals',
+      matchDayNumeric: 5,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-07-05 21:00'),
+      matchDay: 'Quarterfinals',
+      matchDayNumeric: 5,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-07-06 18:00'),
+      matchDay: 'Quarterfinals',
+      matchDayNumeric: 5,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-07-06 21:00'),
+      matchDay: 'Quarterfinals',
+      matchDayNumeric: 5,
+    },
+
+    {
+      id: nanoid(),
+      time: new Date('2024-07-09 21:00'),
+      matchDay: 'Semifinals',
+      matchDayNumeric: 6,
+    },
+    {
+      id: nanoid(),
+      time: new Date('2024-07-10 21:00'),
+      matchDay: 'Semifinals',
+      matchDayNumeric: 6,
+    },
+
+    {
+      id: nanoid(),
+      time: new Date('2024-07-14 21:00'),
+      matchDay: 'Final',
+      matchDayNumeric: 7,
+    },
   ])
 }

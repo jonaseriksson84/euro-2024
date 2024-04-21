@@ -40,8 +40,6 @@ const fixtures = await db
   .leftJoin(teamBSubquery, eq(Fixture.teamB, teamBSubquery.id))
   .orderBy(Fixture.matchDayNumeric)
 
-type FixtureType = typeof Fixture.$inferInsert
-
 const fixturesByMatchDay: Record<string, TFixture[]> = {}
 
 fixtures.forEach((fixture) => {
@@ -50,10 +48,6 @@ fixtures.forEach((fixture) => {
   }
   fixturesByMatchDay[fixture.matchDay].push(fixture)
 })
-
-console.log(fixtures)
-
-console.log(fixturesByMatchDay)
 ---
 
 <Layout>

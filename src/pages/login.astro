@@ -11,16 +11,61 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card'
+import { lucia } from '@/auth'
+import { eq, db, User } from 'astro:db'
+import { Argon2id } from 'oslo/password'
+
+let error = false
+let user = ''
+
+if (Astro.request.method === 'POST') {
+  try {
+    const formData = await Astro.request.formData()
+    const username = formData.get('username') as string
+    user = username
+    const password = formData.get('password') as string
+
+    if (!username || !password) return
+    const existingUser = await db
+      .select()
+      .from(User)
+      .where(eq(User.username, username.toLowerCase()))
+    if (!existingUser || !existingUser.length) {
+      error = true
+    }
+
+    if (!error) {
+      const validPassword = await new Argon2id().verify(
+        existingUser[0].hashed_password,
+        password
+      )
+      if (!validPassword) {
+        error = true
+      }
+    }
+
+    if (!error) {
+      const session = await lucia.createSession(existingUser[0].id, {})
+      const sessionCookie = lucia.createSessionCookie(session.id)
+      Astro.cookies.set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes
+      )
+
+      return Astro.redirect('/')
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message)
+    }
+  }
+}
 ---
 
 <Layout>
   <div class="flex items-center justify-center h-screen">
-    <form
-      id="loginForm"
-      method="post"
-      action="/api/login"
-      class="flex flex-col gap-5"
-    >
+    <form id="loginForm" method="POST" class="flex flex-col gap-5">
       <Card>
         <CardHeader>
           <CardTitle>Log in</CardTitle>
@@ -29,7 +74,13 @@ import {
         <CardContent className="flex flex-col gap-5">
           <Username />
           <Password />
-          <div id="errorMessage" class="text-sm text-destructive"></div>
+          {
+            error && (
+              <div id="errorMessage" class="text-sm text-red-500">
+                Invalid username or password
+              </div>
+            )
+          }
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
           <Button className="w-full">Login</Button>
@@ -43,26 +94,3 @@ import {
     </form>
   </div>
 </Layout>
-
-<script type="module">
-  const form = document.getElementById('loginForm')
-  const errorMessageDiv = document.getElementById('errorMessage')
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault()
-    const formData = new FormData(form)
-    console.log('form', form)
-    console.log('formData', formData)
-    const response = await fetch(form.action, {
-      method: 'POST',
-      body: formData,
-    })
-
-    if (!response.ok) {
-      const result = await response.json()
-      errorMessageDiv.textContent = result.error // Display error message
-    } else {
-      window.location.href = '/' // Redirect on success
-    }
-  })
-</script>

@@ -1,13 +1,11 @@
 import { Argon2id } from 'oslo/password'
 
 import type { APIContext } from 'astro'
-import { lucia } from '../../auth'
 import { User, db, eq } from 'astro:db'
+import { lucia } from '@/auth'
 
-// export async function POST(context: APIContext): Promise<Response> {
-export const loginHandler = async (request: Request) => {
-  console.log('hej', request)
-  const formData = await request.formData()
+export async function POST(context: APIContext): Promise<Response> {
+  const formData = await context.request.formData()
   const username = formData.get('username')
   if (
     typeof username !== 'string' ||
@@ -79,11 +77,11 @@ export const loginHandler = async (request: Request) => {
 
   const session = await lucia.createSession(existingUser[0].id, {})
   const sessionCookie = lucia.createSessionCookie(session.id)
-  Astro.cookies.set(
+  context.cookies.set(
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes
   )
 
-  return Astro.redirect('/')
+  return context.redirect('/')
 }

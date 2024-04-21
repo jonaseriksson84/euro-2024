@@ -1,4 +1,5 @@
 ---
+import { lucia } from '@/auth'
 import Password from '@/components/Password.astro'
 import Username from '@/components/Username.astro'
 import { Button } from '@/components/ui/button'
@@ -11,25 +12,96 @@ import {
   CardFooter,
 } from '@/components/ui/card'
 import Layout from '@/layouts/Layout.astro'
+import { eq, db, User } from 'astro:db'
+import { generateId } from 'lucia'
+import { Argon2id } from 'oslo/password'
+
+const errors = { username: '', password: '' }
+if (Astro.request.method === 'POST') {
+  try {
+    const formData = await Astro.request.formData()
+    const username = formData.get('username') as string
+    // username must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
+    if (
+      typeof username !== 'string' ||
+      username.length < 3 ||
+      username.length > 31 ||
+      !/^[a-z0-9_-]+$/.test(username)
+    ) {
+      errors.username += 'Invalid username'
+    }
+    const password = formData.get('password') as string
+    if (
+      typeof password !== 'string' ||
+      password.length < 6 ||
+      password.length > 255
+    ) {
+      errors.password += 'Invalid password'
+    }
+
+    const userId = generateId(15)
+    const hashedPassword = await new Argon2id().hash(password)
+
+    const existingUser = await db
+      .select()
+      .from(User)
+      .where(eq(User.username, username.toLowerCase()))
+
+    if (existingUser && existingUser.length) {
+      errors.username += 'User already exists'
+    }
+
+    const hasErrors = Object.values(errors).some((msg) => msg)
+    if (!hasErrors) {
+      await db.insert(User).values({
+        id: userId,
+        username: username,
+        hashed_password: hashedPassword,
+      })
+
+      const session = await lucia.createSession(userId, {})
+      const sessionCookie = lucia.createSessionCookie(session.id)
+      Astro.cookies.set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes
+      )
+
+      return Astro.redirect('/')
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message)
+    }
+  }
+}
 ---
 
 <Layout>
   <div class="flex items-center justify-center h-screen">
-    <form
-      id="signupForm"
-      method="post"
-      action="/api/signup"
-      class="flex flex-col gap-5"
-    >
+    <form id="signupForm" method="post" class="flex flex-col gap-5">
       <Card>
         <CardHeader>
           <CardTitle>Sign Up</CardTitle>
           <CardDescription>Create a new account</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-5">
-          <Username />
-          <Password />
-          <div id="errorMessage" class="text-destructive"></div>
+          <div>
+            <Username />
+            {
+              errors.username && (
+                <div class="text-sm text-red-500">{errors.username}</div>
+              )
+            }
+          </div>
+          <div>
+            <Password />
+            {
+              errors.password && (
+                <div class="text-sm text-red-500">{errors.password}</div>
+              )
+            }
+          </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
           <Button className="w-full">Register</Button>
@@ -43,24 +115,3 @@ import Layout from '@/layouts/Layout.astro'
     </form>
   </div>
 </Layout>
-
-<script type="module">
-  const form = document.getElementById('signupForm')
-  const errorMessageDiv = document.getElementById('errorMessage')
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault()
-    const formData = new FormData(form)
-    const response = await fetch(form.action, {
-      method: 'POST',
-      body: formData,
-    })
-
-    if (!response.ok) {
-      const result = await response.json()
-      errorMessageDiv.textContent = result.error // Display error message
-    } else {
-      window.location.href = '/' // Redirect on success
-    }
-  })
-</script>
