@@ -38,16 +38,18 @@ const Country = defineTable({
   },
 })
 
-const Fixture = defineTable({
+export const Fixture = defineTable({
   columns: {
     id: column.text({
       primaryKey: true,
     }),
     teamA: column.text({
       references: () => Country.columns.id,
+      optional: true,
     }),
     teamB: column.text({
       references: () => Country.columns.id,
+      optional: true,
     }),
     time: column.date(),
     matchDay: column.text(),
