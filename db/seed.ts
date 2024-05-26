@@ -84,6 +84,7 @@ export default async function seed() {
       teamB: await getTeam('Scotland'),
       time: new Date('2024-06-14 21:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -91,6 +92,7 @@ export default async function seed() {
       teamB: await getTeam('Switzerland'),
       time: new Date('2024-06-15 15:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -98,6 +100,7 @@ export default async function seed() {
       teamB: await getTeam('Croatia'),
       time: new Date('2024-06-15 18:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -105,6 +108,7 @@ export default async function seed() {
       teamB: await getTeam('Albania'),
       time: new Date('2024-06-15 21:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -112,6 +116,7 @@ export default async function seed() {
       teamB: await getTeam('Netherlands'),
       time: new Date('2024-06-16 15:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -119,6 +124,7 @@ export default async function seed() {
       teamB: await getTeam('Denmark'),
       time: new Date('2024-06-16 18:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -126,6 +132,7 @@ export default async function seed() {
       teamB: await getTeam('England'),
       time: new Date('2024-06-16 21:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -133,6 +140,7 @@ export default async function seed() {
       teamB: await getTeam('Ukraine'),
       time: new Date('2024-06-17 15:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -140,6 +148,7 @@ export default async function seed() {
       teamB: await getTeam('Slovakia'),
       time: new Date('2024-06-17 18:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -147,6 +156,7 @@ export default async function seed() {
       teamB: await getTeam('France'),
       time: new Date('2024-06-17 21:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -154,6 +164,7 @@ export default async function seed() {
       teamB: await getTeam('Georgia'),
       time: new Date('2024-06-18 18:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -161,6 +172,7 @@ export default async function seed() {
       teamB: await getTeam('Czechia'),
       time: new Date('2024-06-18 21:00'),
       matchDay: await getMatchDay('MatchDay 1'),
+      open: true,
     },
 
     {
@@ -169,6 +181,7 @@ export default async function seed() {
       teamB: await getTeam('Albania'),
       time: new Date('2024-06-19 15:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -176,6 +189,7 @@ export default async function seed() {
       teamB: await getTeam('Hungary'),
       time: new Date('2024-06-19 18:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -183,6 +197,7 @@ export default async function seed() {
       teamB: await getTeam('Switzerland'),
       time: new Date('2024-06-19 21:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -190,6 +205,7 @@ export default async function seed() {
       teamB: await getTeam('Serbia'),
       time: new Date('2024-06-20 15:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -197,6 +213,7 @@ export default async function seed() {
       teamB: await getTeam('England'),
       time: new Date('2024-06-20 18:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -204,6 +221,7 @@ export default async function seed() {
       teamB: await getTeam('Italy'),
       time: new Date('2024-06-20 21:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -211,6 +229,7 @@ export default async function seed() {
       teamB: await getTeam('Ukraine'),
       time: new Date('2024-06-21 15:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -218,6 +237,7 @@ export default async function seed() {
       teamB: await getTeam('Austria'),
       time: new Date('2024-06-21 18:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -225,6 +245,7 @@ export default async function seed() {
       teamB: await getTeam('France'),
       time: new Date('2024-06-21 21:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -232,6 +253,7 @@ export default async function seed() {
       teamB: await getTeam('Czechia'),
       time: new Date('2024-06-22 15:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -239,6 +261,7 @@ export default async function seed() {
       teamB: await getTeam('Portugal'),
       time: new Date('2024-06-22 18:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -246,6 +269,7 @@ export default async function seed() {
       teamB: await getTeam('Romania'),
       time: new Date('2024-06-22 21:00'),
       matchDay: await getMatchDay('MatchDay 2'),
+      open: true,
     },
 
     {
@@ -254,6 +278,7 @@ export default async function seed() {
       teamB: await getTeam('Germany'),
       time: new Date('2024-06-23 21:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -261,6 +286,7 @@ export default async function seed() {
       teamB: await getTeam('Hungary'),
       time: new Date('2024-06-23 21:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -268,6 +294,7 @@ export default async function seed() {
       teamB: await getTeam('Spain'),
       time: new Date('2024-06-24 21:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
 
     {
@@ -276,6 +303,7 @@ export default async function seed() {
       teamB: await getTeam('Italy'),
       time: new Date('2024-06-24 21:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -283,6 +311,7 @@ export default async function seed() {
       teamB: await getTeam('Poland'),
       time: new Date('2024-06-25 18:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -290,6 +319,7 @@ export default async function seed() {
       teamB: await getTeam('Austria'),
       time: new Date('2024-06-25 18:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -297,6 +327,7 @@ export default async function seed() {
       teamB: await getTeam('Serbia'),
       time: new Date('2024-06-25 21:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -304,6 +335,7 @@ export default async function seed() {
       teamB: await getTeam('Slovenia'),
       time: new Date('2024-06-25 21:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -311,6 +343,7 @@ export default async function seed() {
       teamB: await getTeam('Romania'),
       time: new Date('2024-06-26 18:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -318,6 +351,7 @@ export default async function seed() {
       teamB: await getTeam('Belgium'),
       time: new Date('2024-06-26 18:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -325,6 +359,7 @@ export default async function seed() {
       teamB: await getTeam('Portugal'),
       time: new Date('2024-06-26 21:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
     {
       id: nanoid(),
@@ -332,85 +367,101 @@ export default async function seed() {
       teamB: await getTeam('Turkey'),
       time: new Date('2024-06-26 21:00'),
       matchDay: await getMatchDay('MatchDay 3'),
+      open: true,
     },
 
     {
       id: nanoid(),
       time: new Date('2024-06-29 18:00'),
       matchDay: await getMatchDay('Round of 16'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-06-29 21:00'),
       matchDay: await getMatchDay('Round of 16'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-06-30 18:00'),
       matchDay: await getMatchDay('Round of 16'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-06-30 21:00'),
       matchDay: await getMatchDay('Round of 16'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-07-01 18:00'),
       matchDay: await getMatchDay('Round of 16'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-07-01 21:00'),
       matchDay: await getMatchDay('Round of 16'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-07-02 18:00'),
       matchDay: await getMatchDay('Round of 16'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-07-02 21:00'),
       matchDay: await getMatchDay('Round of 16'),
+      open: false,
     },
 
     {
       id: nanoid(),
       time: new Date('2024-07-05 18:00'),
       matchDay: await getMatchDay('Quarterfinals'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-07-05 21:00'),
       matchDay: await getMatchDay('Quarterfinals'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-07-06 18:00'),
       matchDay: await getMatchDay('Quarterfinals'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-07-06 21:00'),
       matchDay: await getMatchDay('Quarterfinals'),
+      open: false,
     },
 
     {
       id: nanoid(),
       time: new Date('2024-07-09 21:00'),
       matchDay: await getMatchDay('Semifinals'),
+      open: false,
     },
     {
       id: nanoid(),
       time: new Date('2024-07-10 21:00'),
       matchDay: await getMatchDay('Semifinals'),
+      open: false,
     },
 
     {
       id: nanoid(),
       time: new Date('2024-07-14 21:00'),
       matchDay: await getMatchDay('Final'),
+      open: false,
     },
   ])
 }

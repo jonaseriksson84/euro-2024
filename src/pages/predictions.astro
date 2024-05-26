@@ -1,9 +1,10 @@
 ---
+import CardFooterAstro from '@/components/CardFooterAstro.astro'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import Layout from '@/layouts/Layout.astro'
-import type { TFixture } from '@/types'
 import { MatchDay } from 'astro:db'
 import { db, Fixture, Country, eq, sql } from 'astro:db'
+import { Image } from 'astro:assets'
 
 const teamASubquery = db
   .select({
@@ -36,6 +37,7 @@ const fixtures = await db
       name: teamBSubquery.name,
       flag: teamBSubquery.flag,
     },
+    open: Fixture.open,
   })
   .from(Fixture)
   .leftJoin(teamASubquery, eq(Fixture.teamA, teamASubquery.id))
@@ -48,10 +50,9 @@ let showTitle = false
 ---
 
 <Layout>
-  <!-- <div class="grid grid-cols-3 gap-4 mb-6 gap-y-6"> -->
   <div class="flex flex-wrap justify-center gap-4 gap-y-6">
     {
-      fixtures.map(({ time, teamA, teamB, matchDay }) => {
+      fixtures.map(({ id, time, teamA, teamB, matchDay, open }) => {
         if (currentMatchDay !== matchDay && matchDay) {
           showTitle = true
           currentMatchDay = matchDay
@@ -65,7 +66,7 @@ let showTitle = false
                 {matchDay}
               </h3>
             )}
-            <Card className="w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)]">
+            <Card className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)]">
               <CardHeader className="text-center p-2">
                 <span class="text-sm text-muted-foreground">
                   {new Date(time).toLocaleString('sv-SE', {
@@ -78,9 +79,11 @@ let showTitle = false
                 <div class="flex justify-start w-1/2 gap-2">
                   {teamA ? (
                     <>
-                      <img
+                      <Image
                         src={`https://hatscripts.github.io/circle-flags/flags/${teamA.flag}.svg`}
-                        width="24"
+                        alt={`${teamA.name} flag`}
+                        width={24}
+                        height={24}
                       />
                       {teamA.name}
                     </>
@@ -93,9 +96,11 @@ let showTitle = false
                   {teamB ? (
                     <>
                       {teamB.name}
-                      <img
+                      <Image
                         src={`https://hatscripts.github.io/circle-flags/flags/${teamB.flag}.svg`}
-                        width="24"
+                        alt={`${teamB.name} flag`}
+                        width={24}
+                        height={24}
                       />
                     </>
                   ) : (
@@ -103,19 +108,8 @@ let showTitle = false
                   )}
                 </div>
               </CardContent>
-              <CardFooter className="border-t flex justify-evenly divide p-0">
-                <div
-                  class="hover:bg-[hsl(var(--muted))] w-1/3 p-2 cursor-pointer text-center"
-                  onclick="console.log('tja')"
-                >
-                  1
-                </div>
-                <div class="hover:bg-[hsl(var(--muted))] w-1/3 p-2 cursor-pointer text-center">
-                  X
-                </div>
-                <div class="hover:bg-[hsl(var(--muted))] w-1/3 p-2 cursor-pointer text-center">
-                  2
-                </div>
+              <CardFooter className="border-t p-0">
+                <CardFooterAstro open={open} id={id} />
               </CardFooter>
             </Card>
           </>

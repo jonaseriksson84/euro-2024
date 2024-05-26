@@ -64,6 +64,7 @@ export const Fixture = defineTable({
     matchDay: column.text({
       references: () => MatchDay.columns.id,
     }),
+    open: column.boolean(),
   },
 })
 
