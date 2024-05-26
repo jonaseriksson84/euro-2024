@@ -38,6 +38,15 @@ const Country = defineTable({
   },
 })
 
+export const MatchDay = defineTable({
+  columns: {
+    id: column.text({
+      primaryKey: true,
+    }),
+    name: column.text(),
+  },
+})
+
 export const Fixture = defineTable({
   columns: {
     id: column.text({
@@ -52,8 +61,9 @@ export const Fixture = defineTable({
       optional: true,
     }),
     time: column.date(),
-    matchDay: column.text(),
-    matchDayNumeric: column.number(),
+    matchDay: column.text({
+      references: () => MatchDay.columns.id,
+    }),
   },
 })
 
@@ -63,5 +73,6 @@ export default defineDb({
     Session,
     Country,
     Fixture,
+    MatchDay,
   },
 })

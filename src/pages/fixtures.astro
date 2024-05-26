@@ -2,6 +2,7 @@
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import Layout from '@/layouts/Layout.astro'
 import type { TFixture } from '@/types'
+import { MatchDay } from 'astro:db'
 import { db, Fixture, Country, eq, sql } from 'astro:db'
 
 const teamASubquery = db
@@ -12,6 +13,7 @@ const teamASubquery = db
   })
   .from(Country)
   .as('teamA')
+
 const teamBSubquery = db
   .select({
     id: Country.id,
@@ -20,12 +22,12 @@ const teamBSubquery = db
   })
   .from(Country)
   .as('teamB')
+
 const fixtures = await db
   .select({
     id: Fixture.id,
     time: Fixture.time,
-    matchDay: Fixture.matchDay,
-    matchDayNumeric: Fixture.matchDayNumeric,
+    matchDay: MatchDay.name,
     teamA: {
       name: teamASubquery.name,
       flag: teamASubquery.flag,
@@ -38,26 +40,32 @@ const fixtures = await db
   .from(Fixture)
   .leftJoin(teamASubquery, eq(Fixture.teamA, teamASubquery.id))
   .leftJoin(teamBSubquery, eq(Fixture.teamB, teamBSubquery.id))
-  .orderBy(Fixture.matchDayNumeric)
+  .leftJoin(MatchDay, eq(Fixture.matchDay, MatchDay.id))
+  .orderBy(Fixture.time)
 
-const fixturesByMatchDay: Record<string, TFixture[]> = {}
-
-fixtures.forEach((fixture) => {
-  if (!fixturesByMatchDay[fixture.matchDay]) {
-    fixturesByMatchDay[fixture.matchDay] = []
-  }
-  fixturesByMatchDay[fixture.matchDay].push(fixture)
-})
+let currentMatchDay = ''
+let showTitle = false
 ---
 
 <Layout>
-  {
-    Object.entries(fixturesByMatchDay).map((m) => (
-      <>
-        <h3 class="mb-6 text-lg font-bold text-center">{m[0]}</h3>
-        <div class="grid grid-cols-3 gap-4 mb-6 gap-y-6">
-          {m[1].map(({ time, teamA, teamB }) => (
-            <Card>
+  <!-- <div class="grid grid-cols-3 gap-4 mb-6 gap-y-6"> -->
+  <div class="flex flex-wrap justify-center gap-4 gap-y-6">
+    {
+      fixtures.map(({ time, teamA, teamB, matchDay }) => {
+        if (currentMatchDay !== matchDay && matchDay) {
+          showTitle = true
+          currentMatchDay = matchDay
+        } else {
+          showTitle = false
+        }
+        return (
+          <>
+            {showTitle && (
+              <h3 class="block mt-6 text-lg font-bold text-center basis-full">
+                {matchDay}
+              </h3>
+            )}
+            <Card className="w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)]">
               <CardHeader className="text-center p-2">
                 <span class="text-sm text-muted-foreground">
                   {new Date(time).toLocaleString('sv-SE', {
@@ -96,7 +104,10 @@ fixtures.forEach((fixture) => {
                 </div>
               </CardContent>
               <CardFooter className="border-t flex justify-evenly divide p-0">
-                <div class="hover:bg-[hsl(var(--muted))] w-1/3 p-2 cursor-pointer text-center">
+                <div
+                  class="hover:bg-[hsl(var(--muted))] w-1/3 p-2 cursor-pointer text-center"
+                  onclick="console.log('tja')"
+                >
                   1
                 </div>
                 <div class="hover:bg-[hsl(var(--muted))] w-1/3 p-2 cursor-pointer text-center">
@@ -107,9 +118,9 @@ fixtures.forEach((fixture) => {
                 </div>
               </CardFooter>
             </Card>
-          ))}
-        </div>
-      </>
-    ))
-  }
+          </>
+        )
+      })
+    }
+  </div>
 </Layout>
